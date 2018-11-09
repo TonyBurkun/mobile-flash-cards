@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import { black, white, gray } from '../utils/colors'
 
 export default function Deck(props){
@@ -9,16 +9,30 @@ export default function Deck(props){
     const questionNumber = currentDeck.questions.length;
 
 
-    return (
-        <View style={styles.oneDeck}>
-            <Text style={styles.deckTitle}>
-                {deckTitle}
-            </Text>
-            <View style={styles.questionsBlock}>
-                <Text style={styles.text}>{`${questionNumber} questions`}</Text>
-            </View>
 
-        </View>
+
+    onPress = () => {
+        props.navigation.navigate(
+            'oneDeck',
+            {deckID: deckTitle}
+        );
+
+
+    };
+
+
+    return (
+        <TouchableOpacity onPress={this.onPress}>
+            <View style={styles.oneDeck}>
+                <Text style={styles.deckTitle}>
+                    {deckTitle}
+                </Text>
+                <View style={styles.questionsBlock}>
+                    <Text style={styles.text}>{`${questionNumber} questions`}</Text>
+                </View>
+
+            </View>
+        </TouchableOpacity>
     )
 }
 

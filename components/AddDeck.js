@@ -5,7 +5,8 @@ import {
     StyleSheet,
     TextInput,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Alert,
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { black, white } from '../utils/colors'
@@ -29,16 +30,22 @@ class AddDeck extends Component {
     handleSubmitBtn = () => {
         const {nameDeck} = this.state;
 
-        saveDeckTitle(nameDeck)
-            .then(this.props.dispatch(saveDeckTitleAction(nameDeck)));
+        if (nameDeck) {
+            saveDeckTitle(nameDeck)
+                .then(this.props.dispatch(saveDeckTitleAction(nameDeck)));
 
 
 
-        this.setState({
-            nameDeck: ''
-        });
+            this.setState({
+                nameDeck: ''
+            });
 
-        this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'DecksList'}));
+            this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'DecksList'}));
+        } else {
+            Alert.alert('Notice', 'In order to add the new Deck you have to fill out the title field');
+        }
+
+
 
     };
 
@@ -87,7 +94,6 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 40,
-        height: 40,
         alignSelf: 'stretch',
         marginRight: 15,
         marginLeft: 15,
@@ -96,13 +102,13 @@ const styles = StyleSheet.create({
         borderColor: black,
     },
     submitBtn: {
-        height: 40,
         alignSelf: 'stretch',
         marginRight: 15,
         marginLeft: 15,
         marginTop: 15,
         padding: 10,
-        backgroundColor: black
+        backgroundColor: black,
+        borderRadius: 5,
     },
     submitBtnText: {
         color: white,

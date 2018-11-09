@@ -12,8 +12,6 @@ export function saveDeckTitle (title) {
         }
     };
 
-
-
     return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(savedStructure))
 }
 
@@ -27,4 +25,26 @@ export function getDecks() {
 
 export function clearDecks() {
     return AsyncStorage.clear();
+}
+
+export function getDeck(deckID) {
+   return getDecks()
+        .then( (response) => {
+            response = JSON.parse(response);
+            return response[deckID]
+        })
+}
+
+export function createNewStorageByKey(key, data) {
+    return  AsyncStorage.setItem(key, JSON.stringify(data));
+}
+
+export function deleteDeck(deckID) {
+    getDecks()
+        .then( response => {
+
+            response = JSON.parse(response);
+            delete response[deckID];
+            createNewStorageByKey(STORAGE_KEY,response);
+        })
 }

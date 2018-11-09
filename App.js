@@ -1,20 +1,21 @@
 import React from 'react'
 import {StyleSheet, Text, View, Platform, StatusBar} from 'react-native'
-import {createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
+import {createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator} from 'react-navigation'
 import AddDeck from './components/AddDeck'
 import DecksList from './components/DecksList'
+import AddCard from './components/AddCard'
+import oneDeck from './components/oneDeck'
 import {purple, white, black, gray} from './utils/colors'
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Constants } from 'expo'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import {FontAwesome, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons'
+import {Constants} from 'expo'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 import reducer from './reducers'
 
 
-
-function CustomStatusBar ({backgroundColor, ...props}) {
+function CustomStatusBar({backgroundColor, ...props}) {
     return (
-        <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+        <View style={{backgroundColor, height: Constants.statusBarHeight}}>
             <StatusBar translucent backgroundColor={backgroundColor} {...props} />
         </View>
     )
@@ -26,8 +27,8 @@ const RouteConfigs = {
         screen: DecksList,
         navigationOptions: {
             tabBarLabel: "Decks",
-            tabBarIcon: ({ tintColor }) => (
-                <Ionicons name='md-list-box' size={30}  color={tintColor}/>
+            tabBarIcon: ({tintColor}) => (
+                <Ionicons name='md-list-box' size={30} color={tintColor}/>
             )
         }
     },
@@ -36,8 +37,8 @@ const RouteConfigs = {
         screen: AddDeck,
         navigationOptions: {
             tabBarLabel: 'Add Deck',
-            tabBarIcon: ({ tintColor }) => (
-                <MaterialCommunityIcons name='playlist-plus' size={30} color={tintColor} />
+            tabBarIcon: ({tintColor}) => (
+                <MaterialCommunityIcons name='playlist-plus' size={30} color={tintColor}/>
             )
         }
     },
@@ -72,15 +73,42 @@ const TabNavigatorConfig = {
 };
 
 
-
-
 const Tabs =
     Platform.OS === 'ios'
         ? createBottomTabNavigator(RouteConfigs, TabNavigatorConfig)
         : createMaterialTopTabNavigator(RouteConfigs, TabNavigatorConfig);
 
 
+const MainNavigator = createStackNavigator({
+    home: {
+        screen: Tabs,
+        navigationOptions: {
+            header: null,
+        },
+    },
+    oneDeck: {
+        screen: oneDeck,
+        navigationOptions: ({navigation}) => ({
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: black
+            }
 
+
+        })
+    },
+    addCard: {
+        screen: AddCard,
+        navigationOptions: ({navigation}) => ({
+            headerTintColor: white,
+            title: 'Add Card',
+            headerStyle: {
+                backgroundColor: black
+            }
+        })
+    }
+
+});
 
 
 export default class App extends React.Component {
@@ -92,7 +120,7 @@ export default class App extends React.Component {
             <Provider store={createStore(reducer)}>
                 <View style={{flex: 1}}>
                     <CustomStatusBar backgroundColor={black} barStyle="light-content"/>
-                    <Tabs/>
+                    <MainNavigator/>
                 </View>
             </Provider>
         );

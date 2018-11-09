@@ -10,15 +10,23 @@ class DecksList extends Component{
         const { dispatch } = this.props;
 
         getDecks()
-            .then( result => {
-                console.log('DecksList :', result );
-                dispatch(getDecksAction(JSON.parse(result)))
+            .then( response => {
+                console.log(response);
+                dispatch(getDecksAction(JSON.parse(response)))
             })
     }
 
+    // shouldComponentUpdate (nextProps) {
+    //
+    //     console.log('!!!!!', nextProps);
+    //
+    //     return true
+    // };
+
     render () {
 
-        const {decksList} = this.props;
+        const { decksList } = this.props;
+        // console.log('RENDER Deck List: ', JSON.stringify(decksList));
         const decksListKeysArr = Object.keys(decksList).sort((a,b) => {
             return a > b
         });
@@ -40,7 +48,10 @@ class DecksList extends Component{
                     renderItem={ ({item}) => {
 
                         return (
-                            <Deck currentDeck={decksList[item]}/>
+                            <Deck currentDeck={decksList[item]}
+                                  navigation={this.props.navigation}
+
+                            />
                         )
                     }}
                 >
@@ -73,10 +84,11 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(store) {
+    // console.log('STORE DecksList: ', store);
+    // console.log('decksList', store.decksList);
+
     return {
         decksList: store.decksList,
-        question: store.question,
-        data: store.data
     }
 }
 

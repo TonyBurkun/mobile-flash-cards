@@ -1,12 +1,16 @@
-import { SAVE_DECK_TITLE, GET_DECKS } from '../actions'
+import {
+    SAVE_DECK_TITLE,
+    GET_DECKS,
+    GET_DECK,
+    DELETE_DECK,
+    ADD_CARD
+} from '../actions'
 
 const initialState = {
-    decksList: {},
+    decksList: {}
 };
 
 function entries (state = initialState, action) {
-
-    console.log('reducer: ', action);
 
     switch (action.type) {
         case SAVE_DECK_TITLE:
@@ -28,6 +32,41 @@ function entries (state = initialState, action) {
                 ...state,
                 decksList: {
                     ...action.decksList,
+                }
+            };
+
+        case GET_DECK:
+            return {
+                ...state,
+                currentDeck: action.currentDeck
+            };
+
+        case DELETE_DECK:
+
+            const decksList = {...state.decksList};
+            delete decksList[action.deckID];
+
+            return {
+                ...state,
+                decksList: decksList
+            };
+
+        case ADD_CARD:
+
+            const { deckID, question } = action.cardData;
+
+            return {
+                ...state,
+                decksList: {
+                    ...state.decksList,
+                    [deckID]: {
+                        ...state.decksList[deckID],
+                        questions: [
+                            ...state.decksList[deckID].questions,
+                            question
+
+                        ]
+                    }
                 }
 
             };
