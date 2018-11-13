@@ -18,8 +18,8 @@ export function saveDeckTitle (title) {
 export function getDecks() {
 
     return AsyncStorage.getItem(STORAGE_KEY, (error, result) => {
-        console.log('Error: ', error);
-        console.log('getDecks result: ', result);
+        // console.log('Error: ', error);
+        // console.log('getDecks result: ', result);
     })
 }
 

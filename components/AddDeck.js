@@ -34,8 +34,6 @@ class AddDeck extends Component {
             saveDeckTitle(nameDeck)
                 .then(this.props.dispatch(saveDeckTitleAction(nameDeck)));
 
-
-
             this.setState({
                 nameDeck: ''
             });
@@ -72,12 +70,12 @@ class AddDeck extends Component {
                         <Text style={styles.submitBtnText}>CREATE</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.submitBtn}
-                        onPress={this.handleRemoveBtn}
-                    >
-                        <Text style={styles.submitBtnText}>REMOVE STORAGE</Text>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity*/}
+                        {/*style={styles.submitBtn}*/}
+                        {/*onPress={this.handleRemoveBtn}*/}
+                    {/*>*/}
+                        {/*<Text style={styles.submitBtnText}>REMOVE STORAGE</Text>*/}
+                    {/*</TouchableOpacity>*/}
                 </KeyboardAvoidingView>
             </View>
         )
@@ -112,7 +110,8 @@ const styles = StyleSheet.create({
     },
     submitBtnText: {
         color: white,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontWeight: 'bold'
     }
 
 });
@@ -120,10 +119,10 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(store){
-    // console.log('Add Deck connect: ', store);
+
 
     return {
-
+        decksList: store.decksList
     }
 }
 

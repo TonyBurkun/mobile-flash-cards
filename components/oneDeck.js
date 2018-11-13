@@ -19,13 +19,19 @@ class oneDeck extends Component {
 
 
     handleAddCard = () => {
-        console.log('PRESS ADD CARD');
         const {deckID} = this.props;
         this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'addCard', params: {deckID: deckID}}));
     };
 
     handleStartQuiz = () => {
-        console.log('PRESS START QUIZ');
+
+        this.props.navigation.dispatch(NavigationActions.navigate({
+            routeName: 'quiz',
+            params: {
+                questionNumber: 0,
+                deckID: this.props.deckID,
+            }
+        }));
     };
 
     handleDeleteDeck = () => {
@@ -48,31 +54,35 @@ class oneDeck extends Component {
         return (
             <View style={styles.mainView}>
                 <View style={styles.cardsBlock}>
-                    <Text style={styles.deckTitle}>
-                        {title}
-                    </Text>i
-                    <Text style={styles.cardsTitle}>
-                        { `${cardsLength} cards`}
-                    </Text>
+                    <View>
+                        <Text style={styles.deckTitle}>
+                            {title}
+                        </Text>
+                    </View>
+                    <View>
+                        <Text style={styles.cardsTitle}>
+                            { `${cardsLength} cards`}
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.buttonBlock}>
                     <TouchableOpacity
                         style={styles.btnPosition}
                         onPress={this.handleAddCard}
                     >
-                        <Text style={[styles.whiteBtn, styles.customBtn]}>Add Card</Text>
+                        <Text style={[styles.whiteBtn, styles.customBtn]}>ADD CARD</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnPosition}
                         onPress={this.handleStartQuiz}
                     >
-                        <Text  style={[styles.blackBtn, styles.customBtn]}>Start Quiz</Text>
+                        <Text  style={[styles.blackBtn, styles.customBtn]}>START QUIZ</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnPosition}
                         onPress={this.handleDeleteDeck}
                     >
-                        <Text  style={[styles.customBtn, styles.linkBtn]}>Delete Deck</Text>
+                        <Text  style={[styles.customBtn, styles.linkBtn]}>DELETE DECK</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -110,7 +120,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderWidth: 1,
         borderRadius: 5,
-        padding: 10
+        padding: 10,
+        fontWeight: 'bold',
+
     },
     whiteBtn: {
         color: black,

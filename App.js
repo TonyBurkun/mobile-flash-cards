@@ -5,12 +5,15 @@ import AddDeck from './components/AddDeck'
 import DecksList from './components/DecksList'
 import AddCard from './components/AddCard'
 import oneDeck from './components/oneDeck'
-import {purple, white, black, gray} from './utils/colors'
+import Quiz from './components/Quiz'
+import QuizResult from './components/QuizResult'
+import {white, black, gray} from './utils/colors'
 import {FontAwesome, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons'
 import {Constants} from 'expo'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
+import {setLocalNotification} from './utils/helpers'
 
 
 function CustomStatusBar({backgroundColor, ...props}) {
@@ -106,12 +109,37 @@ const MainNavigator = createStackNavigator({
                 backgroundColor: black
             }
         })
+    },
+    quiz: {
+        screen: Quiz,
+        navigationOptions: ({navigation}) => ({
+            headerTintColor: white,
+            title: 'Quiz',
+            headerStyle: {
+                backgroundColor: black
+            }
+        })
+    },
+    quizResult: {
+        screen: QuizResult,
+        navigationOptions: ({navigation}) => ({
+            headerTintColor: white,
+            title: 'Quiz Result',
+            headerStyle: {
+                backgroundColor: black
+            },
+            headerLeft: null
+        })
     }
 
 });
 
 
 export default class App extends React.Component {
+
+    componentDidMount() {
+        setLocalNotification();
+    }
 
 
     render() {
@@ -121,6 +149,7 @@ export default class App extends React.Component {
                 <View style={{flex: 1}}>
                     <CustomStatusBar backgroundColor={black} barStyle="light-content"/>
                     <MainNavigator/>
+                    {/*<Tabs/>*/}
                 </View>
             </Provider>
         );

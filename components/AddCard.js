@@ -87,7 +87,7 @@ class AddCard extends Component {
                     style={styles.btnPosition}
                     onPress={this.handleSubmit}
                 >
-                    <Text style={[styles.customBtn, styles.blackBtn]}>Submit</Text>
+                    <Text style={[styles.customBtn, styles.blackBtn]}>SUBMIT</Text>
                 </TouchableOpacity>
 
             </View>
@@ -123,7 +123,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderWidth: 1,
         borderRadius: 5,
-        padding: 10
+        padding: 10,
+        fontWeight: 'bold'
     },
     blackBtn: {
         color: white,
